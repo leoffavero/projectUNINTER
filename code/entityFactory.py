@@ -8,7 +8,8 @@ from code.enemy import Enemy
 from code.player import Player
 
 
-class EntityFactory:
+
+class entityFactory:
 
     @staticmethod
     def get_entity(entity_name: str, position=(0,0)):

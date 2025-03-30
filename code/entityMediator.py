@@ -1,19 +1,19 @@
 from code.Const import WIN_WIDTH
 from code.enemy import Enemy
 from code.enemyShot import EnemyShot
-from code.entity import Entity
+from code.entity import entity
 from code.player import Player
-from code.playerShot import PlayerShot
+from code.playerShot import playerShot
+from code.entityMediator import EntityMediator
 
-
-class EntityMediator:
+class entityMediator:
 
     @staticmethod
-    def __verify_collision_window(ent: Entity):
+    def __verify_collision_window(ent: entity):
         if isinstance(ent, Enemy):
             if ent.rect.right <= 0:
                 ent.health = 0
-        if isinstance(ent, PlayerShot):
+        if isinstance(ent, playerShot):
             if ent.rect.left >= WIN_WIDTH:
                 ent.health = 0
         if isinstance(ent, EnemyShot):
@@ -25,7 +25,7 @@ class EntityMediator:
         valid_interaction = False
         if isinstance(ent1, Enemy) and isinstance(ent2, PlayerShot):
             valid_interaction = True
-        elif isinstance(ent1, PlayerShot) and isinstance(ent2, Enemy):
+        elif isinstance(ent1, playerShot) and isinstance(ent2, Enemy):
             valid_interaction = True
         elif isinstance(ent1, Player) and isinstance(ent2, EnemyShot):
             valid_interaction = True
@@ -43,7 +43,7 @@ class EntityMediator:
                 ent2.last_dmg = ent1.name
 
     @staticmethod
-    def __give_score(enemy: Enemy, entity_list: list[Entity]):
+    def __give_score(enemy: Enemy, entity_list: list[entity]):
         if enemy.last_dmg == 'Player1Shot':
             for ent in entity_list:
                 if ent.name == 'Player1':
@@ -54,7 +54,7 @@ class EntityMediator:
                     ent.score += enemy.score
 
     @staticmethod
-    def verify_collision(entity_list: list[Entity]):
+    def verify_collision(entity_list: list[entity]):
         for i in range(len(entity_list)):
             entity1 = entity_list[i]
             EntityMediator.__verify_collision_window(entity1)
@@ -63,7 +63,7 @@ class EntityMediator:
                 EntityMediator.__verify_collision_entity(entity1, entity2)
 
     @staticmethod
-    def verify_health(entity_list: list[Entity]):
+    def verify_health(entity_list: list[entity]):
         for ent in entity_list:
             if ent.health <= 0:
                 if isinstance(ent, Enemy):
