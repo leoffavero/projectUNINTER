@@ -3,11 +3,11 @@
 import pygame
 
 from code.Const import ENTITY_SPEED, WIN_HEIGHT, WIN_WIDTH, PLAYER_KEY_UP, PLAYER_KEY_DOWN, PLAYER_KEY_LEFT, \
-    PLAYER_KEY_RIGHT, ENTITY_SHOT_DELAY, PLAYER_KEY_SHOOT
-from code.entity import Entity
+    PLAYER_KEY_RIGHT, ENTITY_SHOT_DELAY
+from code.entity import entity
 
 
-class Player(Entity):
+class Player(entity):
     def __init__(self, name: str, position: tuple):
         super().__init__(name, position)
 

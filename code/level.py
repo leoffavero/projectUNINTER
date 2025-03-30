@@ -8,10 +8,10 @@ from pygame import Surface, Rect
 from pygame.font import Font
 
 from code import entityFactory
-from code.Const import COLOR_WHITE, WIN_HEIGHT, MENU_OPTION, EVENT_ENEMY, SPAWN_TIME, C_GREEN, C_CYAN, EVENT_TIMEOUT, \
+from code.Const import COLOR_WHITE, WIN_HEIGHT, MENU_OPTION, EVENT_ENEMY, SPAWN_TIME, COLOR_GREEN, COLOR_CYAN, EVENT_TIMEOUT, \
     TIMEOUT_STEP, TIMEOUT_LEVEL
 from code.enemy import Enemy
-from code.entity import Entity
+from code.entity import entity
 from code.entityFactory import entityFactory
 from code.entityMediator import entityMediator
 from code.player import Player
@@ -23,7 +23,7 @@ class Level:
         self.window = window
         self.name = name
         self.game_mode = game_mode
-        self.entity_list: list[Entity] = []
+        self.entity_list: list[entity] = []
         self.entity_list.extend(entityFactory.get_entity(self.name + 'Bg'))
         player = entityFactory.get_entity('Player1')
         player.score = player_score[0]
@@ -79,9 +79,9 @@ class Level:
                     return False
 
             # printed text
-            self.level_text(14, f'{self.name} - Timeout: {self.timeout / 1000:.1f}s', C_WHITE, (10, 5))
-            self.level_text(14, f'fps: {clock.get_fps():.0f}', C_WHITE, (10, WIN_HEIGHT - 35))
-            self.level_text(14, f'entidades: {len(self.entity_list)}', C_WHITE, (10, WIN_HEIGHT - 20))
+            self.level_text(14, f'{self.name} - Timeout: {self.timeout / 1000:.1f}s', COLOR_WHITE, (10, 5))
+            self.level_text(14, f'fps: {clock.get_fps():.0f}', COLOR_WHITE, (10, WIN_HEIGHT - 35))
+            self.level_text(14, f'entidades: {len(self.entity_list)}', COLOR_WHITE, (10, WIN_HEIGHT - 20))
             pygame.display.flip()
             # Collisions
             entityMediator.verify_collision(entity_list=self.entity_list)

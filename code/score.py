@@ -53,7 +53,7 @@ class Score:
                     else:
                         if len(name) < 4:
                             name += event.unicode
-            self.score_text(20, name, C_WHITE, SCORE_POS['Name'])
+            self.score_text(20, name, COLOR_WHITE, SCORE_POS['Name'])
             pygame.display.flip()
             pass
 

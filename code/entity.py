@@ -7,7 +7,7 @@ import pygame
 from code.Const import ENTITY_HEALTH, ENTITY_DAMAGE, ENTITY_SCORE
 
 
-class Entity(ABC):
+class entity(ABC):
     def __init__(self, name: str, position: tuple):
         self.name = name
         self.surf = pygame.image.load('./asset/' + name + '.png').convert_alpha()
@@ -20,5 +20,5 @@ class Entity(ABC):
 
 
 @abstractmethod
-    def move(self, ):
-        pass
+def move(self, ):
+    pass
