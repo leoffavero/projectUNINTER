@@ -17,7 +17,7 @@ from code.player import Player
 from code.playerShot import playerShot
 
 
-class entityMediator:
+class EntityMediator:
     # Constantes para tipos de dano e pontuações
     PLAYER_1_SHOT = 'Player1Shot'
     PLAYER_2_SHOT = 'Player2Shot'
@@ -39,29 +39,30 @@ class entityMediator:
 
     @staticmethod
     def __are_entities_colliding(ent1: entity, ent2: entity) -> bool:
-      #  """Verifica colisão entre entidades usando retângulos."""
-        return (ent1.rect.right >= ent2.rect.left and
-                ent1.rect.left <= ent2.rect.right and
-                ent1.rect.bottom >= ent2.rect.top and
-                ent1.rect.top <= ent2.rect.bottom)
-
+        collision = (ent1.rect.right >= ent2.rect.left and
+                     ent1.rect.left <= ent2.rect.right and
+                     ent1.rect.bottom >= ent2.rect.top and
+                     ent1.rect.top <= ent2.rect.bottom)
+        print(f"Teste colisão entre {ent1.name} e {ent2.name}: {collision}")  # Debug
+        return collision
 
     @staticmethod
     def __handle_entity_collision(ent1: entity, ent2: entity):
-       # """Cuida da lógica de colisão entre duas entidades válidas."""
-        # Tipos válidos de colisão
         valid_collisions = [
             (Enemy, playerShot),
             (playerShot, Enemy),
             (Player, EnemyShot),
-            (EnemyShot, Player)
+            (EnemyShot, Player),
+            (Player, Enemy)
         ]
 
-
-
+        # Verificar as posições das entidades
+        print(f"Posição de {ent1.name}: {ent1.rect.x}, {ent1.rect.y}")
+        print(f"Posição de {ent2.name}: {ent2.rect.x}, {ent2.rect.y}")
 
         if any(isinstance(ent1, t1) and isinstance(ent2, t2) for t1, t2 in valid_collisions):
             if EntityMediator.__are_entities_colliding(ent1, ent2):
+                print(f"COLISÃO DETECTADA entre {ent1.name} e {ent2.name}")  # Debug
                 ent1.health -= ent2.damage
                 ent2.health -= ent1.damage
                 ent1.last_dmg = ent2.name
@@ -77,18 +78,19 @@ class entityMediator:
 
     @staticmethod
     def verify_collision(entity_list: list[entity]):
-       # """Verifica colisões entre entidades e contra as bordas da janela."""
         for i, entity1 in enumerate(entity_list):
             EntityMediator.__handle_entity_outside_window(entity1)
             for j in range(i + 1, len(entity_list)):
                 entity2 = entity_list[j]
                 EntityMediator.__handle_entity_collision(entity1, entity2)
 
+
     @staticmethod
     def verify_health(entity_list: list[entity]):
       #  """Remove entidades com saúde <= 0 e atualiza a pontuação."""
         dead_entities = [ent for ent in entity_list if ent.health <= 0]
         for ent in dead_entities:
+            print(f"{ent.name} foi destruído!")  # Debug para ver quando a entidade é destruída
             if isinstance(ent, Enemy):
                 EntityMediator.__update_score_for_enemy(ent, entity_list)
             entity_list.remove(ent)

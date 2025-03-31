@@ -8,8 +8,9 @@ from pygame import Surface, Rect
 from pygame.font import Font
 
 
-from code.Const import COLOR_WHITE, WIN_HEIGHT, MENU_OPTION, EVENT_ENEMY, SPAWN_TIME, COLOR_GREEN, COLOR_CYAN, EVENT_TIMEOUT, \
-    TIMEOUT_STEP, TIMEOUT_LEVEL
+from code.Const import COLOR_WHITE, WIN_HEIGHT, MENU_OPTION, EVENT_ENEMY, SPAWN_TIME, COLOR_GREEN, COLOR_CYAN, \
+    EVENT_TIMEOUT, \
+    TIMEOUT_STEP, TIMEOUT_LEVEL, COLOR_BLOOD
 from code.enemy import Enemy
 from code.entity import entity
 from code.entityFactory import entityFactory
@@ -50,9 +51,9 @@ class Level:
                     if shoot is not None:
                         self.entity_list.append(shoot)
                 if ent.name == 'Player1':
-                    self.level_text(14, f'Player1 - Health: {ent.health} | Score: {ent.score}', COLOR_GREEN, (10, 25))
+                    self.level_text(14, f'Player1 - Health: {ent.health} | Score: {ent.score}', COLOR_BLOOD, (10, 25))
                 if ent.name == 'Player2':
-                    self.level_text(14, f'Player2 - Health: {ent.health} | Score: {ent.score}', COLOR_CYAN, (10, 45))
+                    self.level_text(14, f'Player2 - Health: {ent.health} | Score: {ent.score}', COLOR_BLOOD, (10, 45))
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -88,7 +89,7 @@ class Level:
             EntityMediator.verify_health(entity_list=self.entity_list)
 
     def level_text(self, text_size: int, text: str, text_color: tuple, text_pos: tuple):
-        text_font: Font = pygame.font.SysFont(name="Lucida Sans Typewriter", size=text_size)
+        text_font: Font = pygame.font.SysFont(name="Impact", size=text_size)
         text_surf: Surface = text_font.render(text, True, text_color).convert_alpha()
         text_rect: Rect = text_surf.get_rect(left=text_pos[0], top=text_pos[1])
         self.window.blit(source=text_surf, dest=text_rect)
