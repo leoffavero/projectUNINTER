@@ -45,6 +45,7 @@ class entityMediator:
                 ent1.rect.bottom >= ent2.rect.top and
                 ent1.rect.top <= ent2.rect.bottom)
 
+
     @staticmethod
     def __handle_entity_collision(ent1: entity, ent2: entity):
        # """Cuida da lógica de colisão entre duas entidades válidas."""
@@ -55,6 +56,9 @@ class entityMediator:
             (Player, EnemyShot),
             (EnemyShot, Player)
         ]
+
+
+
 
         if any(isinstance(ent1, t1) and isinstance(ent2, t2) for t1, t2 in valid_collisions):
             if EntityMediator.__are_entities_colliding(ent1, ent2):
